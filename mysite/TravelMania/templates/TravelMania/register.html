@@ -1,0 +1,368 @@
+{% load static %}
+
+
+<html>
+
+    <head>
+
+        <title>Signup Page!</title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <link href="https://fonts.googleapis.com/css2?family=Ranchers&display=swap" rel="stylesheet">
+
+        <style type="text/css">
+
+            body {
+
+                background-image:url({%static 'TravelMania/image/HP-login.jpg' %});
+                background-size:cover;
+                background-attachment:fixed;
+                background-position:center;
+
+            }
+
+            #box {
+
+                height:560px;
+
+                width:400px;
+                box-shadow:8px 8px 50px;
+                border-radius:20px;
+                position:absolute;
+                top:50%;
+                left:50%;
+                transform:translate(-50%,-50%);
+                text-align:center;
+
+            }
+
+            .sub-box {
+
+                padding:10px 14px;
+                border-radius:20px;
+                outline:none;
+                border:0px;
+                border:2px solid blue;
+
+            }
+
+            .sub-box:focus {
+
+                width:230px;
+                border-color:green;
+
+            }
+
+            #logo {
+
+                height:120px;
+                width:120px;
+                float:left;
+
+            }
+
+            #clear {
+
+                clear:both;
+
+            }
+
+
+
+            #icon i {
+
+                width:20px;
+
+            }
+
+            #header {
+
+                font-family: 'Ranchers', cursive;
+                letter-spacing:1px;
+                float:left;
+                text-shadow:3px 3px 4px white;
+                margin-top:45px;
+
+
+
+            }
+
+
+            #head {
+
+                padding:0px 32px;
+
+            }
+
+            #signup {
+
+                padding:10px 28px;
+                border-radius:20px;
+                outline:none;
+                border:0px;
+                border:2px solid green;
+                cursor:pointer;
+
+            }
+
+            #signup:hover {
+
+                background-color:#66ea0e;
+
+            }
+
+            a {
+
+                color:white;
+
+            }
+
+            #para {
+
+                font-weight:bold;
+                font-style:italic;
+                padding:0px 40px;
+
+            }
+
+            #quote {
+
+                margin-top:0px;
+                font-style:italic;
+                font-weight:bold;
+                font-size:17px;
+
+            }
+
+            #username, #email, #password, #confirmpassword {
+
+                font-weight:bold;
+                color:white;
+                text-shadow:2px 2px 4px black;
+
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <div id="box">
+
+            <div id="head">
+
+                <img id="logo" src="{%static 'TravelMania/image/Logo.png' %}">
+
+                <h1 id="header">Travel Mania</h1>
+
+            </div>
+
+            <div id="clear"></div>
+
+            <p id="quote">Live with no excuses and travel with no regrets!</p>
+
+            <p id="para">Interested in exploring Himachal Pradesh? Sign up now.</p>
+
+            <form id="icon" onsubmit="return validate()" method="post" action="/">
+                {% csrf_token %}
+                <p><i class="fa fa-user" aria-hidden="true"></i> <input id="user" class="sub-box" type="text" name="username" placeholder="Username" autocomplete="off">
+                <br><span id="username"></span></p>
+
+                <p><i class="fa fa-envelope" aria-hidden="true"></i> <input id="mail" class="sub-box" type="text" name="email" placeholder="Your email" autocomplete="off">
+                <br><span id="email"></span></p>
+
+                <p><i class="fa fa-lock" aria-hidden="true"></i> <input id="pass" class="sub-box" type="password" name="password" placeholder="Password" autocomplete="off">
+                <br><span id="password"></span></p>
+
+                <p><i class="fa fa-lock" aria-hidden="true"></i> <input id="confirmpass" class="sub-box" type="password" name="confirmpass" placeholder="Confirm password" autocomplete="off">
+                <br><span id="confirmpassword"></span></p>
+
+                <p><input id="signup" type="submit" value="Signup"></p>
+
+            </form>
+            <div style="background: #C8FCBB; border:1px ; text-align:center; font-weight:bold; text-shadow:2px 2px 4px white;">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            </div>
+            <p><a href="/login">Registered successfully? LogIn</a></p>
+
+            <script type="text/javascript">
+
+            function validate() {
+
+                var user = document.getElementById("user").value;
+
+                var mail = document.getElementById("mail").value;
+
+                var pass = document.getElementById("pass").value;
+
+                var confirmpass = document.getElementById("confirmpass").value;
+
+                document.getElementById("username").innerHTML = "";
+
+                document.getElementById("email").innerHTML = "";
+
+                document.getElementById("password").innerHTML = "";
+
+                document.getElementById("confirmpassword").innerHTML = "";
+
+                if(user == "") {
+
+                    document.getElementById("username").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Please fill the username field.";
+
+                    return false;
+
+                }
+
+                if(user.length < 3 || user.length > 20) {
+
+                    document.getElementById("username").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Username must be between 3 and 20 characters.";
+
+                    return false;
+
+                }
+
+                if((user.indexOf(" ")) != -1) {
+
+                    document.getElementById("username").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "White spaces are not allowed.";
+
+                    return false;
+
+                }
+
+                if( (user.search(/[a-z]/) == -1) && (user.search(/[A-Z]/) == -1) ) {
+
+                    document.getElementById("username").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Username must contain atleast one alphabet.";
+
+                    return false;
+
+                }
+
+                if(mail == "") {
+
+                    document.getElementById("email").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Please fill the email field.";
+
+                    return false;
+
+                }
+
+                if(mail.indexOf("@") == 0) {
+
+                    document.getElementById("email").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Please enter a part followed by '@'.";
+
+                    return false;
+
+                }
+
+                if(( mail.length - (mail.indexOf(".") + 1) == 0) || (mail.length - (mail.indexOf(".") + 1) == 1)) {
+
+                    document.getElementById("email").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Please enter a valid email.";
+
+                    return false;
+
+                }
+
+                if(mail.indexOf("@") == -1) {
+
+                    document.getElementById("email").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Please includce an '@' in the email.";
+
+                    return false;
+
+                }
+
+                if(((mail.indexOf(".") - mail.indexOf("@")) < 3) && ((mail.indexOf(".") - mail.indexOf("@")) >= 0)) {
+
+                    document.getElementById("email").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Please enter a valid email.";
+
+                    return false;
+
+                }
+
+                if(((mail.length) - (mail.indexOf("@") + 1)) == 0) {
+
+                    document.getElementById("email").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Please enter a part followed by '@'."
+
+                    return false;
+
+                }
+
+                if((mail.indexOf(".") - mail.indexOf("@")) < 0) {
+
+                    document.getElementById("email").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Please enter a valid email."
+
+                    return false;
+
+                }
+
+                if(pass == "") {
+
+                    document.getElementById("password").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Please fill the password field.";
+
+                    return false;
+
+                }
+
+                if(pass.length < 8 || pass.length > 20) {
+
+                    document.getElementById("password").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Password must be between 8 and 20 characters.";
+
+                    return false;
+
+                }
+
+                if(!(isNaN(pass))) {
+
+                    document.getElementById("password").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Password can't be only numeric.";
+
+                    return false;
+
+                }
+
+                if(pass.indexOf(" ") != -1) {
+
+                    document.getElementById("password").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "White spaces are not allowed.";
+
+                    return false;
+
+                }
+
+                if(user == pass) {
+
+                    document.getElementById("password").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Password and username must be distinct.";
+
+                    return false;
+
+                }
+
+                if(confirmpass == "") {
+
+                    document.getElementById("confirmpassword").innerHTML = '<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" + "Please fill the confirm password field.";
+
+                    return false;
+
+                }
+
+                if(pass!=confirmpass) {
+
+                    document.getElementById("confirmpassword").innerHTML ='<i class="fa fa-exclamation" aria-hidden="true">' + "</i>" +  "The two password fields didn't match.";
+
+                    return false;
+
+                }
+
+            }
+
+            </script>
+
+        </div>
+    <script>!function(e,t,a){var c=e.head||e.getElementsByTagName("head")[0],n=e.createElement("script");n.async=!0,n.defer=!0, n.type="text/javascript",n.src=t+"/static/js/chat_widget.js?config="+JSON.stringify(a),c.appendChild(n)}(document,"https://app.engati.com",{bot_key:"796832aaf75e4866",welcome_msg:true,branding_key:"default",server:"https://app.engati.com",e:"p" });</script>
+    </body>
+
+</html>
